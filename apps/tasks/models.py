@@ -10,7 +10,7 @@ class Category(models.Model):
         User, verbose_name='Dono', on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name = 'Categorias'
+        verbose_name = 'Categoria'
         ordering = ('id',)
 
     def __str__(self):
