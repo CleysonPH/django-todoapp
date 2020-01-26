@@ -50,6 +50,7 @@ THIRD_APPS = []
 
 PROJECT_APPS = [
     'core.apps.CoreConfig',
+    'tasks.apps.TasksConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + PROJECT_APPS
