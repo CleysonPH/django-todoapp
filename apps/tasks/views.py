@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib import messages
 
 from .forms import CategoryForm, TaskForm
 
@@ -11,6 +12,8 @@ def create_category(request):
             category = form.save(commit=False)
             category.owner = request.user
             category.save()
+
+            messages.success(request, 'Categoria salva com sucesso!')
 
     template_name = 'tasks/category_form.html'
     form = CategoryForm()
