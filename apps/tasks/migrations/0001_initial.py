@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             name='Category',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50, verbose_name='Nome')),
+                ('name', models.CharField(max_length=150, verbose_name='Nome')),
                 ('description', models.TextField(blank=True, null=True, verbose_name='Descrição')),
                 ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
