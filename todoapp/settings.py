@@ -146,6 +146,8 @@ MESSAGE_TAGS = {
     messages.INFO: 'alert-info',
 }
 
+LOGIN_URL = 'accounts:user-login'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
