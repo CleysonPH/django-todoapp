@@ -40,7 +40,7 @@
                                     <td>{{ task.get_status_display }}</td>
                                     <td>
                                         <a href="{% url 'tasks:task-edit' pk=task.pk %}" class="btn btn-small btn-primary">Editar</a>
-                                        <a href="" class="btn btn-small btn-danger confirm-delete" data-toggle="modal" data-target="#confirm-delete-modal" id="delete-button-{{ task.pk }}">Excluir</a>
+                                        <a href="{% url 'tasks:task-remove' pk=task.pk %}" class="btn btn-small btn-danger confirm-delete" data-toggle="modal" data-target="#confirm-delete-modal" id="delete-button-{{ task.pk }}">Excluir</a>
                                     </td>
                                 </tr>
                             {% endfor %}

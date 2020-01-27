@@ -117,3 +117,12 @@ def edit_task(request, pk):
     }
 
     return render(request, template_name, context)
+
+
+def remove_task(request, pk):
+    task = get_object_or_404(Task, pk=pk, owner=request.user)
+    task.delete()
+    messages.success(
+        request, f'Tarefa {task.name} apagada com sucesso')
+
+    return redirect('tasks:task-list')
