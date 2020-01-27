@@ -51,3 +51,16 @@
     </main>
 
 {% endblock content %}
+
+{% block scripts %}
+
+    <script>
+        $('#{{form.end_date.id_for_label}}').datepicker({
+            dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+            dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+            monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+            dateFormat: "dd/mm/yy"
+        });
+    </script>
+
+{% endblock scripts %}
