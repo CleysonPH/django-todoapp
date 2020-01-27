@@ -10,5 +10,7 @@ urlpatterns = [
     path('categoria/<int:pk>/editar/', views.edit_category, name='category-edit'),
     path('categoria/<int:pk>/apagar/',
          views.remove_category, name='category-remove'),
+    path('tarefas/', views.list_tasks, name='task-list'),
     path('tarefa/criar/', views.create_task, name='task-create'),
+    path('tarefa/<int:pk>/editar/', views.edit_task, name='task-edit'),
 ]

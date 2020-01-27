@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }} | {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+
+    <main class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h1>{{ title }}</h1>
+                {% include 'partials/message.html' %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                {% if task_list %}
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Data Final</th>
+                                <th scope="col">Prioridade</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for task in task_list %}
+                                <tr>
+                                    <th scope="row">{{ task.id }}</th>
+                                    <td>{{ task.name }}</td>
+                                    <td>{{ task.description }}</td>
+                                    <td>{{ task.end_date }}</td>
+                                    <td>{{ task.get_priority_display }}</td>
+                                    <td>{{ task.get_status_display }}</td>
+                                    <td>
+                                        <a href="{% url 'tasks:task-edit' pk=task.pk %}" class="btn btn-small btn-primary">Editar</a>
+                                        <a href="" class="btn btn-small btn-danger confirm-delete" data-toggle="modal" data-target="#confirm-delete-modal" id="delete-button-{{ task.pk }}">Excluir</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <h4>Usuário {{request.user}} não possui nenhuma tarefa cadastrada</h4>
+                {% endif %}
+            </div>
+        </div>
+
+        {% include 'tasks/confirm_delete_modal.html' %}
+    </main>
+
+{% endblock content %}
+
+{% block scripts %}
+
+    <script>
+        $(document).on('click', '.confirm-delete', function(){
+            $('#confirm-delete-modal').attr('caller-id', $(this).attr('id'));
+        });
+        $(document).on('click', '#confirm-delete-button-modal', function(){
+            var caller = $('#confirm-delete-button-modal').closest('.modal').attr('caller-id');
+            window.location = $('#'.concat(caller)).attr('href');
+        });
+    </script>
+
+{% endblock scripts %}

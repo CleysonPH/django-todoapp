@@ -86,3 +86,34 @@ def create_task(request):
         'form': form,
     }
     return render(request, template_name, context)
+
+
+def list_tasks(request):
+    template_name = 'tasks/task_list.html'
+    task_list = Task.objects.filter(owner=request.user).exclude(status='CD')
+
+    context = {
+        'title': 'Lista de Tarefas',
+        'task_list': task_list,
+    }
+
+    return render(request, template_name, context)
+
+
+def edit_task(request, pk):
+    task = get_object_or_404(Task, pk=pk, owner=request.user)
+    if request.method == 'POST':
+        form = TaskForm(request.POST, instance=task)
+
+        if form.is_valid():
+            form.save()
+            return redirect('tasks:task-list')
+
+    template_name = 'tasks/task_form.html'
+    form = TaskForm(instance=task)
+    context = {
+        'title': 'Editar dados da tarefa',
+        'form': form,
+    }
+
+    return render(request, template_name, context)
