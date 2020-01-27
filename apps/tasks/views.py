@@ -54,3 +54,9 @@ def edit_category(request, pk):
     }
 
     return render(request, template_name, context)
+
+
+def remove_category(request, pk):
+    category = get_object_or_404(Category, pk=pk, owner=request.user)
+    category.delete()
+    return redirect('tasks:category-list')

@@ -33,7 +33,7 @@
                                     <td>{{ category.description }}</td>
                                     <td>
                                         <a href="{% url 'tasks:category-edit' pk=category.pk %}" class="btn btn-small btn-primary">Editar</a>
-                                        <a href="" class="btn btn-small btn-danger">Excluir</a>
+                                        <a href="{% url 'tasks:category-remove' pk=category.pk %}" class="btn btn-small btn-danger confirm-delete" data-toggle="modal" data-target="#confirm-delete-modal" id="delete-button-{{ category.pk }}">Excluir</a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -44,6 +44,22 @@
                 {% endif %}
             </div>
         </div>
+
+        {% include 'tasks/confirm_delete_modal.html' %}
     </main>
 
 {% endblock content %}
+
+{% block scripts %}
+
+    <script>
+        $(document).on('click', '.confirm-delete', function(){
+            $('#confirm-delete-modal').attr('caller-id', $(this).attr('id'));
+        });
+        $(document).on('click', '#confirm-delete-button-modal', function(){
+            var caller = $('#confirm-delete-button-modal').closest('.modal').attr('caller-id');
+            window.location = $('#'.concat(caller)).attr('href');
+        });
+    </script>
+
+{% endblock scripts %}
