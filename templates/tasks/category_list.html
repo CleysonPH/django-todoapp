@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Listagem das Categorias | {{ block.super }}
+    {{ title }} | {{ block.super }}
 {% endblock title %}
 
 {% block content %}
@@ -10,6 +10,7 @@
         <div class="row">
             <div class="col-sm">
                 <h1>{{ title }}</h1>
+                {% include 'partials/message.html' %}
             </div>
         </div>
 

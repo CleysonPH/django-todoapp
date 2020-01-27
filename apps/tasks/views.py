@@ -14,7 +14,8 @@ def create_category(request):
             category.owner = request.user
             category.save()
 
-            messages.success(request, 'Categoria salva com sucesso!')
+            messages.success(
+                request, f'Categoria {category.name} salva com sucesso!')
 
     template_name = 'tasks/category_form.html'
     form = CategoryForm()
@@ -59,4 +60,29 @@ def edit_category(request, pk):
 def remove_category(request, pk):
     category = get_object_or_404(Category, pk=pk, owner=request.user)
     category.delete()
+    messages.success(
+        request, f'Categoria {category.name} apagada com sucesso')
+
     return redirect('tasks:category-list')
+
+
+def create_task(request):
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.owner = request.user
+            task.save()
+            form.save_m2m()
+
+            messages.success(
+                request, f'Tarefa {task.name} salva com sucesso!')
+
+    template_name = 'tasks/task_form.html'
+    form = TaskForm()
+    context = {
+        'title': 'Criar nova tarefa',
+        'form': form,
+    }
+    return render(request, template_name, context)
