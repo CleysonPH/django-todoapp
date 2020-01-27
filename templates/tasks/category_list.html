@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Listagem das Categorias | {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+
+    <main class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h1>{{ title }}</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                {% if category_list %}
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for category in category_list %}
+                                <tr>
+                                    <th scope="row">{{ category.id }}</th>
+                                    <td>{{ category.name }}</td>
+                                    <td>{{ category.description }}</td>
+                                    <td>Editar e Excluir</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <h4>Usuário {{request.user}} não possui nenhuma categoria cadastrada</h4>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+{% endblock content %}
