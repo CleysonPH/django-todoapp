@@ -6,7 +6,7 @@ from .forms import CategoryForm, TaskForm
 from .models import Category, Task
 
 
-@login_required()
+@login_required
 def create_category(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -28,7 +28,7 @@ def create_category(request):
     return render(request, template_name, context)
 
 
-@login_required()
+@login_required
 def list_categories(request):
     template_name = 'tasks/category_list.html'
     category_list = Category.objects.filter(owner=request.user)
@@ -41,7 +41,7 @@ def list_categories(request):
     return render(request, template_name, context)
 
 
-@login_required()
+@login_required
 def edit_category(request, pk):
     category = get_object_or_404(Category, pk=pk, owner=request.user)
     if request.method == 'POST':
@@ -61,7 +61,7 @@ def edit_category(request, pk):
     return render(request, template_name, context)
 
 
-@login_required()
+@login_required
 def remove_category(request, pk):
     category = get_object_or_404(Category, pk=pk, owner=request.user)
     category.delete()
@@ -71,7 +71,7 @@ def remove_category(request, pk):
     return redirect('tasks:category-list')
 
 
-@login_required()
+@login_required
 def create_task(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -94,7 +94,7 @@ def create_task(request):
     return render(request, template_name, context)
 
 
-@login_required()
+@login_required
 def list_tasks(request):
     template_name = 'tasks/task_list.html'
     task_list = Task.objects.filter(owner=request.user).exclude(status='CD')
@@ -107,7 +107,7 @@ def list_tasks(request):
     return render(request, template_name, context)
 
 
-@login_required()
+@login_required
 def edit_task(request, pk):
     task = get_object_or_404(Task, pk=pk, owner=request.user)
     if request.method == 'POST':
@@ -127,7 +127,7 @@ def edit_task(request, pk):
     return render(request, template_name, context)
 
 
-@login_required()
+@login_required
 def remove_task(request, pk):
     task = get_object_or_404(Task, pk=pk, owner=request.user)
     task.delete()
