@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 
-from .forms import UserForm
+from .forms import UserForm, UserProfileForm
 
 
 def create_user(request):
@@ -70,6 +70,26 @@ def user_change_password(request):
     form = PasswordChangeForm(user=request.user)
     context = {
         'title': 'Trocar Senha',
+        'form': form,
+    }
+    return render(request, template_name, context)
+
+
+@login_required
+def create_user_profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            user_profile = form.save(commit=False)
+            user_profile.user = request.user
+            user_profile.save()
+            messages.success(request, 'Perfil alterado com sucesso!')
+
+    template_name = 'accounts/user_profile_form.html'
+    form = UserProfileForm()
+    context = {
+        'title': 'Alterar Perfil',
         'form': form,
     }
     return render(request, template_name, context)

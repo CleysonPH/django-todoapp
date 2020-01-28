@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -22,4 +24,4 @@ urlpatterns = [
     path('todo/', include('tasks.urls', namespace='tasks')),
     path('contas/', include('accounts.urls', namespace='accounts')),
     path('', include('core.urls', namespace='core')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

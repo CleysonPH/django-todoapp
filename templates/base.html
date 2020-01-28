@@ -64,7 +64,7 @@
                             {{ user.get_full_name|default:user.username }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="user-dropdown">
-                            <a class="dropdown-item" href="#">Perfil</a>
+                            <a class="dropdown-item" href="{% url 'accounts:user-profile-create' %}">Perfil</a>
                             <a class="dropdown-item" href="{% url 'accounts:user-change-password' %}">Trocar Senha</a>
                             <a class="dropdown-item" href="{% url 'accounts:user-logout' %}">Sair</a>
                         </div>
@@ -86,6 +86,8 @@
     <script src="{% static 'js/jquery-ui.min.js' %}"></script>
     <!-- Select2 JS Import -->
     <script src="{% static 'js/select2.min.js' %}"></script>
+    <!-- JQuery Input Mask Import -->
+    <script src="{% static 'js/jquery.mask.min.js' %}"></script>
     <!-- Bootstarp JS Import -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     {% block scripts %}{% endblock scripts %}
