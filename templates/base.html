@@ -67,7 +67,7 @@
                             <div class="container text-center">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <img src="{{ user.profile.photo.url }}" alt="" class="img-fluid rounded-circle img-thumbnail">
+                                        <img src="{{ user.profile.photo.url|default:"https://api.adorable.io/avatars/"|add:user.username|add:".png" }}" alt="" class="img-fluid rounded-circle img-thumbnail">
                                     </div>
                                     <div class="col-12">
                                         <span class="badge badge-primary">{{ user.email|default:'email não cadastrado' }}</span>
