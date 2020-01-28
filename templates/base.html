@@ -65,7 +65,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="user-dropdown">
                             <a class="dropdown-item" href="#">Perfil</a>
-                            <a class="dropdown-item" href="#">Trocar Senha</a>
+                            <a class="dropdown-item" href="{% url 'accounts:user-change-password' %}">Trocar Senha</a>
                             <a class="dropdown-item" href="{% url 'accounts:user-logout' %}">Sair</a>
                         </div>
                     </li>

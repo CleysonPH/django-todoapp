@@ -36,6 +36,7 @@
     <form class="form-signin" method="POST">
         {% csrf_token %}
         <h1 class="h3 mb-3 font-weight-normal">Identifique-se</h1>
+        {% include 'partials/message.html' %}
         <label for="id_username" class="sr-only">Usuário</label>
         <input type="text" id="id_username" name="username" class="form-control" placeholder="Nome de usuário" required autofocus>
         <label for="id_password" class="sr-only">Senha</label>
@@ -43,6 +44,11 @@
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
     </form>
+
+    <!-- JQuery JS Import -->
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <!-- Bootstarp JS Import -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
 
 </html>
