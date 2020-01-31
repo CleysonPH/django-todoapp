@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block title %}
+    {{ title }} | {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+
+    <main class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>{{ title }}</h1>
+                {% include 'partials/message.html' %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="media">
+                    <img width=100 src="{{ profile.photo.url|default:"https://api.adorable.io/avatars/abott@adorable.png" }}" alt="" class="align-self-start mr-3">
+                    <div>
+                        <h5 class="mt-0">{{ profile.user.get_full_name|default:profile.user.username }}</h5>
+                        <p><strong>Celular: </strong> {{ profile.cell_phone }}</p>
+                        <p><strong>Email: </strong> {{profile.user.email }}</p>
+                    </div>
+                </div>
+                <a href="{% url 'accounts:user-profile-edit' %}" class="btn btn-primary">Alterar Perfil</a>
+            </div>
+        </div>
+    </main>
+
+{% endblock content %}

@@ -6,6 +6,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 
 from .forms import UserForm, UserProfileForm
+from .models import UserProfile
 
 
 def create_user(request):
@@ -84,12 +85,50 @@ def create_user_profile(request):
             user_profile = form.save(commit=False)
             user_profile.user = request.user
             user_profile.save()
-            messages.success(request, 'Perfil alterado com sucesso!')
+            messages.success(request, 'Perfil criado com sucesso!')
+            return redirect('accounts:user-profile-detail')
 
     template_name = 'accounts/user_profile_form.html'
     form = UserProfileForm()
     context = {
+        'title': 'Criar Perfil',
+        'form': form,
+    }
+    return render(request, template_name, context)
+
+
+@login_required
+def detail_user_profile(request):
+    try:
+        profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        return redirect('accounts:user-profile-create')
+
+    template_name = 'accounts/detail_user_profile.html'
+    context = {
+        'title': 'Detalhes do Perfil',
+        'profile': profile,
+    }
+    return render(request, template_name, context)
+
+
+@login_required
+def edit_user_profile(request):
+    profile = UserProfile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=profile)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Perfil alterado com sucesso!')
+            return redirect('accounts:user-profile-detail')
+
+    template_name = 'accounts/user_profile_form.html'
+    form = UserProfileForm(instance=profile)
+    context = {
         'title': 'Alterar Perfil',
+        'profile': profile,
         'form': form,
     }
     return render(request, template_name, context)
