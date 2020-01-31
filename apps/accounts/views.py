@@ -78,23 +78,27 @@ def user_change_password(request):
 
 @login_required
 def create_user_profile(request):
-    if request.method == 'POST':
-        form = UserProfileForm(request.POST, request.FILES)
+    try:
+        request.user.profile
+    except User.profile.RelatedObjectDoesNotExist:
+        if request.method == 'POST':
+            form = UserProfileForm(request.POST, request.FILES)
 
-        if form.is_valid():
-            user_profile = form.save(commit=False)
-            user_profile.user = request.user
-            user_profile.save()
-            messages.success(request, 'Perfil criado com sucesso!')
-            return redirect('accounts:user-profile-detail')
+            if form.is_valid():
+                user_profile = form.save(commit=False)
+                user_profile.user = request.user
+                user_profile.save()
+                messages.success(request, 'Perfil criado com sucesso!')
+                return redirect('accounts:user-profile-detail')
 
-    template_name = 'accounts/user_profile_form.html'
-    form = UserProfileForm()
-    context = {
-        'title': 'Criar Perfil',
-        'form': form,
-    }
-    return render(request, template_name, context)
+        template_name = 'accounts/user_profile_form.html'
+        form = UserProfileForm()
+        context = {
+            'title': 'Criar Perfil',
+            'form': form,
+        }
+        return render(request, template_name, context)
+    return redirect('accounts:user-profile-detail')
 
 
 @login_required
