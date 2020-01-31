@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 
-from .forms import UserForm, UserProfileForm
+from .forms import UserForm, UserProfileForm, UserUpdateForm
 from .models import UserProfile
 
 
@@ -128,7 +128,25 @@ def edit_user_profile(request):
     form = UserProfileForm(instance=profile)
     context = {
         'title': 'Alterar Perfil',
-        'profile': profile,
         'form': form,
+    }
+    return render(request, template_name, context)
+
+
+@login_required
+def update_user(request):
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Perfil atualizado com sucesso!')
+            return redirect('accounts:user-profile-detail')
+
+    form = UserUpdateForm(instance=request.user)
+    template_name = 'accounts/user_update.html'
+    context = {
+        'title': 'Atualizar dados',
+        'form': form
     }
     return render(request, template_name, context)
